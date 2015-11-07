@@ -3,7 +3,10 @@ package io.programminglife.androidvideostreamserver.websocket;
 import android.util.Log;
 
 import com.koushikdutta.async.AsyncServer;
+import com.koushikdutta.async.ByteBufferList;
+import com.koushikdutta.async.DataEmitter;
 import com.koushikdutta.async.callback.CompletedCallback;
+import com.koushikdutta.async.callback.DataCallback;
 import com.koushikdutta.async.http.WebSocket;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
@@ -11,10 +14,18 @@ import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.programminglife.androidvideostreamserver.util.FileUtil;
+
 /**
  * Created by andreivisan on 11/4/15.
  */
 public class WebSocketServer {
+
+    private FileUtil fileUtil;
+
+    public WebSocketServer() {
+        fileUtil = new FileUtil();
+    }
 
     public void createWebSocketServer() {
         AsyncHttpServer httpServer = new AsyncHttpServer();
@@ -44,7 +55,9 @@ public class WebSocketServer {
                     @Override
                     public void onStringAvailable(String s) {
                         if ("test".equals(s)) {
-                            webSocket.send("Success!");
+                            byte[] bImage = fileUtil.getImageFile("");
+                            Log.i("WebSocket", "image size " + bImage.length);
+                            webSocket.send(bImage, 100, 2903784);
                         }
                     }
                 });
