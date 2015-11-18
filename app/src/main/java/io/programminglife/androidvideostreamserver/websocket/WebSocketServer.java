@@ -3,13 +3,12 @@ package io.programminglife.androidvideostreamserver.websocket;
 import android.util.Log;
 
 import com.koushikdutta.async.AsyncServer;
-import com.koushikdutta.async.ByteBufferList;
-import com.koushikdutta.async.DataEmitter;
 import com.koushikdutta.async.callback.CompletedCallback;
-import com.koushikdutta.async.callback.DataCallback;
 import com.koushikdutta.async.http.WebSocket;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
+import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
+import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,8 @@ import io.programminglife.androidvideostreamserver.util.FileUtil;
  * Created by andreivisan on 11/4/15.
  */
 public class WebSocketServer {
+
+    private static final String tag = WebSocketServer.class.getSimpleName();
 
     private FileUtil fileUtil;
 
@@ -63,6 +64,21 @@ public class WebSocketServer {
                 });
 
                 _sockets.add(webSocket);
+            }
+        });
+
+        httpServer.listen(mAsyncServer, 8080);
+    }
+
+    public void createHttpServer() {
+        AsyncHttpServer httpServer = new AsyncHttpServer();
+        AsyncServer mAsyncServer = new AsyncServer();
+
+        httpServer.get("/get-image", new HttpServerRequestCallback() {
+            @Override
+            public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
+                Log.i(tag, "Request received!");
+                response.send("Hello!!!");
             }
         });
 

@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        startWebSocketServer();
+        //startWebSocketServer();
+        startHttpServer();
     }
 
     @Override
@@ -53,5 +54,10 @@ public class MainActivity extends AppCompatActivity {
         WebSocketServer webSocketServer = new WebSocketServer();
 
         webSocketServer.createWebSocketServer();
+    }
+
+    private void startHttpServer() {
+        WebSocketServer webSocketServer = new WebSocketServer();
+        webSocketServer.createHttpServer();
     }
 }
