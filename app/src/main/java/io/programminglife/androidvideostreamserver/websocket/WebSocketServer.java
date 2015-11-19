@@ -95,8 +95,12 @@ public class WebSocketServer {
         httpServer.get("/get-media", new HttpServerRequestCallback() {
             @Override
             public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
+                Log.i(tag, "Request received!");
+
                 JSONObject mediaFiles = new FileUtil().getMediaFilesList();
-                response.setContentType("application/json");
+
+                Log.i(tag, "Response object: " + mediaFiles);
+
                 response.send(mediaFiles);
             }
         });

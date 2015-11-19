@@ -61,7 +61,7 @@ public class FileUtil {
                     JSONObject fileJson = new JSONObject();
                     fileJson.put("fileName", files[i].getName());
                     fileJson.put("extension", getFileExtension(files[i].getName()));
-                    mediaFilesList.put("file", fileJson);
+                    mediaFilesList.put("file"+i, fileJson);
                 }
             }
         } catch (JSONException e) {
@@ -73,7 +73,7 @@ public class FileUtil {
     private String getFileExtension(String fileName) {
         String extension = null;
         int lastIndexOfDot = fileName.lastIndexOf(".");
-        extension = fileName.substring(lastIndexOfDot, extension.length() - 1);
+        extension = fileName.substring(lastIndexOfDot, fileName.length());
         Log.i(tag, "File " + fileName + " has extension " + extension);
         return extension;
     }
