@@ -3,6 +3,10 @@ package io.programminglife.androidvideostreamserver.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -12,6 +16,8 @@ import java.io.FileInputStream;
  * Created by andreivisan on 11/7/15.
  */
 public class FileUtil {
+
+    private final static String tag = FileUtil.class.getSimpleName();
 
     public byte[] getImageFile(String name) {
         File sdCardPicture = new File("/sdcard/DCIM/Camera/IMG_20151021_080749.jpg");
@@ -43,6 +49,33 @@ public class FileUtil {
         byte[] bytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
         return encodedImage;
+    }
+
+    public JSONObject getMediaFilesList() {
+        JSONObject mediaFilesList = new JSONObject();
+        File sdCardMediaFolder = new File("/sdcard/DCIM/Camera/");
+        try {
+            if(sdCardMediaFolder.isDirectory()) {
+                File[] files = sdCardMediaFolder.listFiles();
+                for(int i = 0; i < files.length; i++) {
+                    JSONObject fileJson = new JSONObject();
+                    fileJson.put("fileName", files[i].getName());
+                    fileJson.put("extension", getFileExtension(files[i].getName()));
+                    mediaFilesList.put("file", fileJson);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mediaFilesList;
+    }
+
+    private String getFileExtension(String fileName) {
+        String extension = null;
+        int lastIndexOfDot = fileName.lastIndexOf(".");
+        extension = fileName.substring(lastIndexOfDot, extension.length() - 1);
+        Log.i(tag, "File " + fileName + " has extension " + extension);
+        return extension;
     }
 
 }
