@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,7 +112,10 @@ public class WebSocketServer {
                 Log.i(tag, "Request for video received!");
                 String fileName = request.getQuery().getString("name");
                 response.setContentType("video/mp4");
-                response.sendFile(fileUtil.getFile(fileName));
+                byte[] movieBytes = fileUtil.getFile(fileName);
+                InputStream inputStream = new ByteArrayInputStream(movieBytes);
+                //response.sendStream(inputStream, movieBytes.length);
+                response.send(fileUtil.getFileString(fileName));
             }
         });
 

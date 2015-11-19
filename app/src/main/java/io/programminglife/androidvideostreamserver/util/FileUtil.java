@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Created by andreivisan on 11/7/15.
@@ -38,9 +40,29 @@ public class FileUtil {
         return bFile;
     }
 
-    public File getFile(String fileName) {
+    public byte[] getFile(String fileName) {
+        String movieString = null;
         File sdCardPicture = new File("/sdcard/DCIM/Camera/"+fileName);
-        return sdCardPicture;
+        try {
+            byte[] videoBytes = FileUtils.readFileToByteArray(sdCardPicture);
+            movieString = Base64.encodeToString(videoBytes, Base64.NO_WRAP);
+            return videoBytes;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getFileString(String fileName) {
+        String movieString = null;
+        File sdCardPicture = new File("/sdcard/DCIM/Camera/"+fileName);
+        try {
+            byte[] videoBytes = FileUtils.readFileToByteArray(sdCardPicture);
+            movieString = Base64.encodeToString(videoBytes, Base64.NO_WRAP);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return movieString;
     }
 
     public String base64EncodedImage(String fileName) {
