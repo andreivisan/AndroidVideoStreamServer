@@ -82,15 +82,9 @@ public class WebSocketServer {
             @Override
             public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
                 Log.i(tag, "Request received!");
-                //try {
+                String fileName = request.getQuery().getString("name");
                 response.setContentType("image/jpeg");
-                response.send(fileUtil.base64EncodedImage());
-//                    response.sendStream(fileUtil.getFile(),
-//                            fileUtil.getFile().length());
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-                //response.send("Hello!!!");
+                response.send(fileUtil.base64EncodedImage(fileName));
             }
         });
 

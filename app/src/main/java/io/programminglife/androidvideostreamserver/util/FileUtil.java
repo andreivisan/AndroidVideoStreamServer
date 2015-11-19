@@ -43,8 +43,8 @@ public class FileUtil {
         return sdCardPicture;
     }
 
-    public String base64EncodedImage() {
-        Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/DCIM/Camera/IMG_20151021_080749.jpg");
+    public String base64EncodedImage(String fileName) {
+        Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/DCIM/Camera/" + fileName);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] bytes = baos.toByteArray();
