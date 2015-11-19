@@ -38,8 +38,8 @@ public class FileUtil {
         return bFile;
     }
 
-    public File getFile() {
-        File sdCardPicture = new File("/sdcard/DCIM/Camera/IMG_20151021_080749.jpg");
+    public File getFile(String fileName) {
+        File sdCardPicture = new File("/sdcard/DCIM/Camera/"+fileName);
         return sdCardPicture;
     }
 

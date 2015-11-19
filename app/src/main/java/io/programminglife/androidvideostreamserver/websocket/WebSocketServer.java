@@ -78,16 +78,6 @@ public class WebSocketServer {
         AsyncHttpServer httpServer = new AsyncHttpServer();
         AsyncServer mAsyncServer = new AsyncServer();
 
-        httpServer.get("/get-image", new HttpServerRequestCallback() {
-            @Override
-            public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
-                Log.i(tag, "Request received!");
-                String fileName = request.getQuery().getString("name");
-                response.setContentType("image/jpeg");
-                response.send(fileUtil.base64EncodedImage(fileName));
-            }
-        });
-
         httpServer.get("/get-media", new HttpServerRequestCallback() {
             @Override
             public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
@@ -101,6 +91,26 @@ public class WebSocketServer {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        httpServer.get("/get-image", new HttpServerRequestCallback() {
+            @Override
+            public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
+                Log.i(tag, "Request for image received!");
+                String fileName = request.getQuery().getString("name");
+                response.setContentType("image/jpeg");
+                response.send(fileUtil.base64EncodedImage(fileName));
+            }
+        });
+
+        httpServer.get("/get-video", new HttpServerRequestCallback() {
+            @Override
+            public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
+                Log.i(tag, "Request for video received!");
+                String fileName = request.getQuery().getString("name");
+                response.setContentType("video/mp4");
+                response.sendFile(fileUtil.getFile(fileName));
             }
         });
 
