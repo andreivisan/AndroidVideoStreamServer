@@ -12,7 +12,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -24,9 +23,9 @@ public class FileUtil {
 
     public String base64EncodedVideo(String fileName) {
         String movieString = null;
-        File sdCardPicture = new File("/sdcard/DCIM/Camera/"+fileName);
+        File sdCardMovie = new File("/sdcard/DCIM/Camera/"+fileName);
         try {
-            byte[] videoBytes = FileUtils.readFileToByteArray(sdCardPicture);
+            byte[] videoBytes = FileUtils.readFileToByteArray(sdCardMovie);
             movieString = Base64.encodeToString(videoBytes, Base64.NO_WRAP);
         } catch (IOException e) {
             e.printStackTrace();
