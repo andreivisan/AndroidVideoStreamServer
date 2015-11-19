@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,8 +52,8 @@ public class FileUtil {
         return encodedImage;
     }
 
-    public JSONObject getMediaFilesList() {
-        JSONObject mediaFilesList = new JSONObject();
+    public JSONArray getMediaFilesList() {
+        JSONArray mediaFilesList = new JSONArray();
         File sdCardMediaFolder = new File("/sdcard/DCIM/Camera/");
         try {
             if(sdCardMediaFolder.isDirectory()) {
@@ -61,7 +62,7 @@ public class FileUtil {
                     JSONObject fileJson = new JSONObject();
                     fileJson.put("fileName", files[i].getName());
                     fileJson.put("extension", getFileExtension(files[i].getName()));
-                    mediaFilesList.put("file"+i, fileJson);
+                    mediaFilesList.put(i, fileJson);
                 }
             }
         } catch (JSONException e) {

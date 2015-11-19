@@ -10,6 +10,8 @@ import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -95,13 +97,16 @@ public class WebSocketServer {
         httpServer.get("/get-media", new HttpServerRequestCallback() {
             @Override
             public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
-                Log.i(tag, "Request received!");
-
-                JSONObject mediaFiles = new FileUtil().getMediaFilesList();
-
-                Log.i(tag, "Response object: " + mediaFiles);
-
-                response.send(mediaFiles);
+                try {
+                    Log.i(tag, "Request for file system received!");
+                    JSONArray mediaFilesArray = new FileUtil().getMediaFilesList();
+                    JSONObject mediaFiles = new JSONObject();
+                    mediaFiles.put("files", mediaFilesArray);
+                    Log.i(tag, "Response object: " + mediaFiles);
+                    response.send(mediaFiles);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
