@@ -10,6 +10,8 @@ import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +89,15 @@ public class WebSocketServer {
 //                    e.printStackTrace();
 //                }
                 //response.send("Hello!!!");
+            }
+        });
+
+        httpServer.get("/get-media", new HttpServerRequestCallback() {
+            @Override
+            public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
+                JSONObject mediaFiles = new FileUtil().getMediaFilesList();
+                response.setContentType("application/json");
+                response.send(mediaFiles);
             }
         });
 
