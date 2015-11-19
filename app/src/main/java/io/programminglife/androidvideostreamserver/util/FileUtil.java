@@ -22,38 +22,7 @@ public class FileUtil {
 
     private final static String tag = FileUtil.class.getSimpleName();
 
-    public byte[] getImageFile(String name) {
-        File sdCardPicture = new File("/sdcard/DCIM/Camera/IMG_20151021_080749.jpg");
-        return readFileContetnIntoByteArray(sdCardPicture);
-    }
-
-    private byte[] readFileContetnIntoByteArray(File file) {
-        FileInputStream fileInputStream = null;
-        byte[] bFile = new byte[(int) file.length()];
-        try {
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bFile);
-            fileInputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bFile;
-    }
-
-    public byte[] getFile(String fileName) {
-        String movieString = null;
-        File sdCardPicture = new File("/sdcard/DCIM/Camera/"+fileName);
-        try {
-            byte[] videoBytes = FileUtils.readFileToByteArray(sdCardPicture);
-            movieString = Base64.encodeToString(videoBytes, Base64.NO_WRAP);
-            return videoBytes;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public String getFileString(String fileName) {
+    public String base64EncodedVideo(String fileName) {
         String movieString = null;
         File sdCardPicture = new File("/sdcard/DCIM/Camera/"+fileName);
         try {

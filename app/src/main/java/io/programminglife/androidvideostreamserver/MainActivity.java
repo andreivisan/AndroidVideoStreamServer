@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.programminglife.androidvideostreamserver.websocket.WebSocketServer;
+import io.programminglife.androidvideostreamserver.websocket.HttpServer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //startWebSocketServer();
         startHttpServer();
     }
 
@@ -50,14 +49,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void startWebSocketServer() {
-        WebSocketServer webSocketServer = new WebSocketServer();
-
-        webSocketServer.createWebSocketServer();
-    }
-
     private void startHttpServer() {
-        WebSocketServer webSocketServer = new WebSocketServer();
-        webSocketServer.createHttpServer();
+        HttpServer httpServer = new HttpServer();
+        httpServer.createHttpServer();
     }
 }
